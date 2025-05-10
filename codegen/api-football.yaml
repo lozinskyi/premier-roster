@@ -1,0 +1,492 @@
+openapi: 3.0.0
+info:
+  title: API Football
+  version: 1.0.0
+paths:
+  /teams:
+    get:
+      summary: Get teams by league and season
+      parameters:
+        - name: league
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "39"
+        - name: season
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "2022"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  get:
+                    type: string
+                    example: "teams"
+                  parameters:
+                    $ref: '#/components/schemas/Parameters'
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                  results:
+                    type: integer
+                    example: 20
+                  paging:
+                    $ref: '#/components/schemas/Paging'
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TeamResponse'
+  /players:
+    get:
+      summary: Get players by league, season, team, and page
+      parameters:
+        - name: league
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "39"
+        - name: season
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "2022"
+        - name: team
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "33"
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  get:
+                    type: string
+                    example: "players"
+                  parameters:
+                    $ref: '#/components/schemas/PlayerParameters'
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                  results:
+                    type: integer
+                    example: 20
+                  paging:
+                    $ref: '#/components/schemas/Paging'
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PlayerResponse'
+components:
+  schemas:
+    Parameters:
+      type: object
+      properties:
+        league:
+          type: string
+          example: "39"
+        season:
+          type: string
+          example: "2022"
+    Paging:
+      type: object
+      properties:
+        current:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 1
+    TeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/Team'
+        venue:
+          $ref: '#/components/schemas/Venue'
+      required:
+        - team
+        - venue
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 33
+        name:
+          type: string
+          example: "Manchester United"
+        code:
+          type: string
+          example: "MUN"
+        country:
+          type: string
+          example: "England"
+        founded:
+          type: integer
+          example: 1878
+        national:
+          type: boolean
+          example: false
+        logo:
+          type: string
+          example: "https://media.api-sports.io/football/teams/33.png"
+      required:
+        - id
+        - name
+        - code
+        - country
+        - founded
+        - national
+        - logo
+    Venue:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 556
+        name:
+          type: string
+          example: "Old Trafford"
+        address:
+          type: string
+          example: "Sir Matt Busby Way"
+        city:
+          type: string
+          example: "Manchester"
+        capacity:
+          type: integer
+          example: 76212
+        surface:
+          type: string
+          example: "grass"
+        image:
+          type: string
+          example: "https://media.api-sports.io/football/venues/556.png"
+    PlayerParameters:
+      type: object
+      properties:
+        league:
+          type: string
+          example: "39"
+        season:
+          type: string
+          example: "2022"
+        team:
+          type: string
+          example: "33"
+        page:
+          type: integer
+          example: 1
+    PlayerResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/Player'
+        statistics:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerStatistics'
+      required:
+        - player
+        - statistics
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 883
+        name:
+          type: string
+          example: "Lee Grant"
+        firstname:
+          type: string
+          example: "Lee"
+        lastname:
+          type: string
+          example: "Grant"
+        age:
+          type: integer
+          example: 39
+        birth:
+          $ref: '#/components/schemas/Birth'
+        nationality:
+          type: string
+          example: "England"
+        height:
+          type: string
+          example: "193 cm"
+        weight:
+          type: string
+          example: "83 kg"
+        injured:
+          type: boolean
+          example: false
+        photo:
+          type: string
+          example: "https://media.api-sports.io/football/players/883.png"
+      required:
+        - id
+        - name
+        - firstname
+        - lastname
+        - age
+        - birth
+        - nationality
+        - height
+        - weight
+        - injured
+        - photo
+    Birth:
+      type: object
+      properties:
+        date:
+          type: string
+          example: "1983-01-27"
+        place:
+          type: string
+          example: "Hemel Hempstead"
+        country:
+          type: string
+          example: "England"
+      required:
+        - date
+        - place
+        - country
+    PlayerStatistics:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/Team'
+        league:
+          $ref: '#/components/schemas/League'
+        games:
+          $ref: '#/components/schemas/Games'
+        substitutes:
+          $ref: '#/components/schemas/Substitutes'
+        shots:
+          $ref: '#/components/schemas/Shots'
+        goals:
+          $ref: '#/components/schemas/Goals'
+        passes:
+          $ref: '#/components/schemas/Passes'
+        tackles:
+          $ref: '#/components/schemas/Tackles'
+        duels:
+          $ref: '#/components/schemas/Duels'
+        dribbles:
+          $ref: '#/components/schemas/Dribbles'
+        fouls:
+          $ref: '#/components/schemas/Fouls'
+        cards:
+          $ref: '#/components/schemas/Cards'
+        penalty:
+          $ref: '#/components/schemas/Penalty'
+      required:
+        - team
+        - league
+        - games
+        - substitutes
+        - shots
+        - goals
+        - passes
+        - tackles
+        - duels
+        - dribbles
+        - fouls
+        - cards
+        - penalty
+    League:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 39
+        name:
+          type: string
+          example: "Premier League"
+        country:
+          type: string
+          example: "England"
+        logo:
+          type: string
+          example: "https://media.api-sports.io/football/leagues/39.png"
+        flag:
+          type: string
+          example: "https://media.api-sports.io/flags/gb-eng.svg"
+        season:
+          type: integer
+          example: 2022
+    Games:
+      type: object
+      properties:
+        appearences:
+          type: integer
+          example: null
+        lineups:
+          type: integer
+          example: null
+        minutes:
+          type: integer
+          example: null
+        number:
+          type: integer
+          example: null
+        position:
+          type: string
+          example: "Goalkeeper"
+        rating:
+          type: string
+          example: null
+        captain:
+          type: boolean
+          example: false
+      required:
+        - appearences
+        - lineups
+        - minutes
+        - number
+        - position
+        - rating
+        - captain
+    Substitutes:
+      type: object
+      properties:
+        in:
+          type: integer
+          example: null
+        out:
+          type: integer
+          example: null
+        bench:
+          type: integer
+          example: null
+    Shots:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: null
+        on:
+          type: integer
+          example: null
+    Goals:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: null
+        conceded:
+          type: integer
+          example: null
+        assists:
+          type: integer
+          example: null
+        saves:
+          type: integer
+          example: null
+    Passes:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: null
+        key:
+          type: integer
+          example: null
+        accuracy:
+          type: integer
+          example: null
+    Tackles:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: null
+        blocks:
+          type: integer
+          example: null
+        interceptions:
+          type: integer
+          example: null
+    Duels:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: null
+        won:
+          type: integer
+          example: null
+    Dribbles:
+      type: object
+      properties:
+        attempts:
+          type: integer
+          example: null
+        success:
+          type: integer
+          example: null
+        past:
+          type: integer
+          example: null
+    Fouls:
+      type: object
+      properties:
+        drawn:
+          type: integer
+          example: null
+        committed:
+          type: integer
+          example: null
+    Cards:
+      type: object
+      properties:
+        yellow:
+          type: integer
+          example: null
+        yellowred:
+          type: integer
+          example: null
+        red:
+          type: integer
+          example: null
+    Penalty:
+      type: object
+      properties:
+        won:
+          type: integer
+          example: null
+        commited:
+          type: integer
+          example: null
+        scored:
+          type: integer
+          example: null
+        missed:
+          type: integer
+          example: null
+        saved:
+          type: integer
+          example: null

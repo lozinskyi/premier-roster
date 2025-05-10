@@ -1,29 +1,46 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import { config } from "@gluestack-ui/config";
+import { Box, GluestackUIProvider } from "@gluestack-ui/themed";
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { StatusBar } from 'react-native';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Create custom dark theme config
+const darkConfig = {
+  ...config,
+  tokens: {
+    ...config.tokens,
+    colors: {
+      ...config.tokens.colors,
+      // Enhanced dark theme colors
+      primary500: "$purple500",
+      primary600: "$purple600",
+      primary700: "$purple700",
+      secondary500: "$amber500",
+      secondary600: "$amber600",
+      secondary700: "$amber700",
+    }
+  }
+};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <GluestackUIProvider config={darkConfig}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <Box flex={1} bg="$backgroundDark900">
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#121212',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            contentStyle: {
+              backgroundColor: '$backgroundDark900',
+            }
+          }}
+        />
+      </Box>
+    </GluestackUIProvider>
   );
 }
