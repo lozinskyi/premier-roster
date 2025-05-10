@@ -5,7 +5,7 @@ import { TeamInfo } from '../molecules';
 
 interface TeamCardProps {
   team: Team;
-  onPress: (teamId: string) => void;
+  onPress: (team: Team) => void;
 }
 
 const TeamCardComponent: React.FC<TeamCardProps> = ({
@@ -13,8 +13,8 @@ const TeamCardComponent: React.FC<TeamCardProps> = ({
   onPress
 }) => {
   const handlePress = useCallback(() => {
-    onPress(team.id.toString());
-  }, [onPress, team.id]);
+    onPress(team);
+  }, [onPress, team]);
 
   return (
     <Pressable 

@@ -15,10 +15,12 @@ import { StoredPlayer } from '../src/types';
 const Team: React.FC = () => {
   const {
     teamId,
+    teamName,
     league,
     season,
   } = useLocalSearchParams<{
     teamId: string;
+    teamName: string;
     league: string;
     season: string;
   }>();
@@ -69,7 +71,7 @@ const Team: React.FC = () => {
       <StatusBar barStyle="light-content" />
       <Stack.Screen 
         options={{ 
-          title: 'Team Roster',
+          title: teamName,
           headerStyle: {
             backgroundColor: '#121212',
           },

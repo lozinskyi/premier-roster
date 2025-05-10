@@ -18,8 +18,8 @@ const Teams: FC = () => {
     setSearchText,
   } = useTeams(PREMIER_LEAGUE_ID, SEASON_2022_ID);
 
-  const handleTeamPress = useCallback((teamId: string) => {
-    router.push(`/team?teamId=${teamId}&league=${PREMIER_LEAGUE_ID}&season=${SEASON_2022_ID}`);
+  const handleTeamPress = useCallback((team: Team) => {
+    router.push(`/team?teamId=${team.id}&teamName=${team.name}&league=${PREMIER_LEAGUE_ID}&season=${SEASON_2022_ID}`);
   }, [router]);
 
   const renderTeam = useCallback(({ item }: { item: Team }) => (
