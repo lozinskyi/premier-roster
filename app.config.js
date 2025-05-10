@@ -44,6 +44,7 @@ export default {
     },
     extra: {
       FOOTBALL_API_KEY: process.env.FOOTBALL_API_KEY,
+      FOOTBALL_API_BASE_URL: process.env.FOOTBALL_API_BASE_URL,
     }
   }
 }
