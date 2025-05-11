@@ -54,11 +54,6 @@ jobs:
           echo "EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}" >> .env
           cat .env
 
-      - name: Link EAS Project
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas project:init --id ${{ secrets.EAS_PROJECT_ID }} --non-interactive
-
       - name: Build and submit to Google Play
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
