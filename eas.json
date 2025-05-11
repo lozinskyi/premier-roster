@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 7.0.0"
+    "version": ">= 7.0.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -13,18 +14,18 @@
     "production": {
       "autoIncrement": true,
       "env": {
-        "FOOTBALL_API_KEY": "${process.env.FOOTBALL_API_KEY}",
-        "FOOTBALL_API_BASE_URL": "${process.env.FOOTBALL_API_BASE_URL}",
-        "EAS_PROJECT_ID": "${process.env.EAS_PROJECT_ID}"
+        "FOOTBALL_API_KEY": "$FOOTBALL_API_KEY",
+        "FOOTBALL_API_BASE_URL": "$FOOTBALL_API_BASE_URL",
+        "EAS_PROJECT_ID": "$EAS_PROJECT_ID"
       }
     }
   },
   "submit": {
     "production": {
       "ios": {
-        "appleId": "${process.env.EXPO_APPLE_ID}",
-        "ascAppId": "${process.env.EXPO_APP_ID}",
-        "appleTeamId": "${process.env.EXPO_TEAM_ID}"
+        "appleId": "$EXPO_APPLE_ID",
+        "ascAppId": "$EXPO_APP_ID",
+        "appleTeamId": "$EXPO_TEAM_ID"
       },
       "android": {
         "serviceAccountKeyPath": "pc-api-key.json",
