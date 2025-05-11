@@ -39,12 +39,7 @@ Premier Roster uses the Football API to fetch team and player data. The app impl
    ```
    Note: `.env*.local` files are gitignored for security reasons
 
-4. Generate API client
-   ```bash
-   npm run api:gen
-   ```
-
-5. Start the development server
+4. Start the development server
    ```bash
    npx expo start
    ```
@@ -109,11 +104,6 @@ Tests are located in `__tests__` directories throughout the project. Run tests w
 npm test
 ```
 
-The Jest configuration includes:
-- Custom setup in `jest.setup.js` to mock native modules
-- Coverage reporting (excludes type definition files and generated API code)
-- JSDOM test environment
-
 ### CI/CD Pipeline
 
 The project uses a comprehensive CI/CD pipeline to ensure code quality and streamline the deployment process:
@@ -121,8 +111,6 @@ The project uses a comprehensive CI/CD pipeline to ensure code quality and strea
 #### Continuous Integration
 - Automated testing with Jest
 - Code quality checks with ESLint and Prettier
-- TypeScript type checking
-- Build verification for each platform
 
 #### Continuous Deployment
 The project uses EAS Build for creating and distributing builds:
@@ -142,12 +130,6 @@ The project uses EAS Build for creating and distributing builds:
   eas build --profile production --platform all
   eas submit --profile production --platform all
   ```
-
-#### GitHub Actions Workflow
-The CI/CD process is automated using GitHub Actions, which:
-1. Runs linting, type checking, and tests on every pull request
-2. Creates preview builds when merging to the develop branch
-3. Creates and submits production builds when merging to the main branch
 
 ### Project Structure
 ```
