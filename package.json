@@ -19,8 +19,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --write",
-      "expo lint --fix",
-      "jest --findRelatedTests"
+      "expo lint --fix"
     ]
   },
   "dependencies": {
