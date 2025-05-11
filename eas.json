@@ -15,8 +15,7 @@
       "autoIncrement": true,
       "env": {
         "FOOTBALL_API_KEY": "$FOOTBALL_API_KEY",
-        "FOOTBALL_API_BASE_URL": "$FOOTBALL_API_BASE_URL",
-        "EAS_PROJECT_ID": "$EAS_PROJECT_ID"
+        "FOOTBALL_API_BASE_URL": "$FOOTBALL_API_BASE_URL"
       }
     }
   },

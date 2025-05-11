@@ -51,12 +51,10 @@ jobs:
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
-          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         run: eas build --auto-submit --profile production --platform android --non-interactive --no-wait
         
       - name: Publish EAS Update
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
-          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         run: eas update --auto --platform android
