@@ -48,7 +48,7 @@ jobs:
       - name: Link EAS Project
         env:
             EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas project:link --id ${{ secrets.EAS_PROJECT_ID }} --non-interactive
+        run: eas project:init --id ${{ secrets.EAS_PROJECT_ID }} --non-interactive
 
       - name: Build and submit to TestFlight
         env:
