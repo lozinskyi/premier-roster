@@ -92,6 +92,10 @@ jobs:
           fi
 
       - name: Build Android (EAS)
+        env:
+          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+          FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         run: eas build --platform android --non-interactive --no-wait --profile production
 
       - name: Build iOS (EAS)
@@ -99,6 +103,9 @@ jobs:
           EXPO_APPLE_ID: ${{ secrets.EXPO_APPLE_ID }}
           EXPO_APP_ID: ${{ secrets.EXPO_APP_ID }}
           EXPO_TEAM_ID: ${{ secrets.EXPO_TEAM_ID }}
+          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+          FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         run: eas build --platform ios --non-interactive --no-wait --profile production
 
       - name: Submit to App Store
