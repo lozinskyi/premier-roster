@@ -4,15 +4,21 @@ import { Text, View } from 'react-native';
 
 // Create mock components with proper TypeScript types
 const MockCenter = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-center" {...props}>{children}</View>
+  <View testID="mock-center" {...props}>
+    {children}
+  </View>
 );
 
 const MockVStack = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-vstack" {...props}>{children}</View>
+  <View testID="mock-vstack" {...props}>
+    {children}
+  </View>
 );
 
 const MockText = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <Text testID="mock-text" {...props}>{children}</Text>
+  <Text testID="mock-text" {...props}>
+    {children}
+  </Text>
 );
 
 // Mock modules
@@ -23,12 +29,13 @@ jest.mock('@gluestack-ui/themed', () => ({
 }));
 
 // Import the component after mocking dependencies
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { EmptyState } = require('../../../components/atoms/EmptyState');
 
 describe('EmptyState', () => {
   it('renders with message only', () => {
     const { getByText, getByTestId } = render(<EmptyState message="No data found" />);
-    
+
     expect(getByTestId('mock-center')).toBeTruthy();
     expect(getByTestId('mock-vstack')).toBeTruthy();
     expect(getByTestId('mock-text')).toBeTruthy();
@@ -37,10 +44,8 @@ describe('EmptyState', () => {
 
   it('renders with message and icon', () => {
     const icon = <View testID="mock-custom-icon">Icon</View>;
-    const { getByText, getByTestId } = render(
-      <EmptyState message="No data found" icon={icon} />
-    );
-    
+    const { getByText, getByTestId } = render(<EmptyState message="No data found" icon={icon} />);
+
     expect(getByTestId('mock-center')).toBeTruthy();
     expect(getByTestId('mock-vstack')).toBeTruthy();
     expect(getByTestId('mock-text')).toBeTruthy();

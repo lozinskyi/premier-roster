@@ -4,37 +4,34 @@ import { Text, TextInput, View } from 'react-native';
 
 // Create mock components with proper TypeScript types
 const MockBox = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-box" {...props}>{children}</View>
+  <View testID="mock-box" {...props}>
+    {children}
+  </View>
 );
 
 const MockInput = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-input" {...props}>{children}</View>
+  <View testID="mock-input" {...props}>
+    {children}
+  </View>
 );
 
-const MockInputField = ({ 
-  onChangeText, 
-  value, 
-  ...props 
-}: { 
+const MockInputField = ({
+  onChangeText,
+  value,
+  ...props
+}: {
   onChangeText?: (text: string) => void;
   value?: string;
   [key: string]: any;
-}) => (
-  <TextInput
-    testID="mock-input-field"
-    value={value}
-    onChangeText={onChangeText}
-    {...props}
-  />
-);
+}) => <TextInput testID="mock-input-field" value={value} onChangeText={onChangeText} {...props} />;
 
-const MockInputSlot = ({ 
-  children, 
-  onPress, 
+const MockInputSlot = ({
+  children,
+  onPress,
   pl,
   pr,
-  ...props 
-}: { 
+  ...props
+}: {
   children?: React.ReactNode;
   onPress?: () => void;
   pl?: string;
@@ -42,36 +39,28 @@ const MockInputSlot = ({
   [key: string]: any;
 }) => {
   // Determine testID based on props to differentiate between search and clear slots
-  const testID = onPress ? "mock-input-slot-clear" : "mock-input-slot-search";
-  
+  const testID = onPress ? 'mock-input-slot-clear' : 'mock-input-slot-search';
+
   return (
-    <View
-      testID={testID}
-      onTouchEnd={onPress}
-      {...props}
-    >
+    <View testID={testID} onTouchEnd={onPress} {...props}>
       {children}
     </View>
   );
 };
 
 // Mock Ionicons component from @expo/vector-icons
-const MockIonicons = ({ 
-  name, 
-  size, 
-  color, 
-  ...props 
-}: { 
+const MockIonicons = ({
+  name,
+  size,
+  color,
+  ...props
+}: {
   name: string;
   size?: number;
   color?: string;
   [key: string]: any;
 }) => (
-  <View 
-    testID={`mock-icon-${name}`}
-    style={{ width: size, height: size }}
-    {...props}
-  >
+  <View testID={`mock-icon-${name}`} style={{ width: size, height: size }} {...props}>
     <Text>{name}</Text>
   </View>
 );
@@ -89,6 +78,7 @@ jest.mock('@expo/vector-icons', () => ({
 }));
 
 // Import the component after mocking dependencies
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { SearchBar } = require('../../../components/molecules/SearchBar');
 
 describe('SearchBar', () => {
@@ -97,7 +87,7 @@ describe('SearchBar', () => {
     const { getByTestId, getByPlaceholderText } = render(
       <SearchBar value="" onChangeText={mockChangeText} />
     );
-    
+
     expect(getByTestId('mock-box')).toBeTruthy();
     expect(getByTestId('mock-input')).toBeTruthy();
     expect(getByTestId('mock-input-field')).toBeTruthy();
@@ -110,43 +100,37 @@ describe('SearchBar', () => {
     const { getByPlaceholderText } = render(
       <SearchBar value="" onChangeText={mockChangeText} placeholder="Find teams..." />
     );
-    
+
     expect(getByPlaceholderText('Find teams...')).toBeTruthy();
   });
 
   it('displays clear button when there is input and clears text on press', () => {
     const mockChangeText = jest.fn();
-    const { getByTestId } = render(
-      <SearchBar value="test" onChangeText={mockChangeText} />
-    );
-    
+    const { getByTestId } = render(<SearchBar value="test" onChangeText={mockChangeText} />);
+
     const clearButton = getByTestId('mock-icon-close');
     expect(clearButton).toBeTruthy();
-    
+
     const parentSlot = getByTestId('mock-input-slot-clear');
     fireEvent(parentSlot, 'onTouchEnd');
-    
+
     expect(mockChangeText).toHaveBeenCalledWith('');
   });
 
   it('does not display clear button when input is empty', () => {
     const mockChangeText = jest.fn();
-    const { queryByTestId } = render(
-      <SearchBar value="" onChangeText={mockChangeText} />
-    );
-    
+    const { queryByTestId } = render(<SearchBar value="" onChangeText={mockChangeText} />);
+
     expect(queryByTestId('mock-icon-close')).toBeNull();
   });
 
   it('calls onChangeText when text changes', () => {
     const mockChangeText = jest.fn();
-    const { getByTestId } = render(
-      <SearchBar value="" onChangeText={mockChangeText} />
-    );
-    
+    const { getByTestId } = render(<SearchBar value="" onChangeText={mockChangeText} />);
+
     const input = getByTestId('mock-input-field');
     fireEvent.changeText(input, 'test input');
-    
+
     expect(mockChangeText).toHaveBeenCalledWith('test input');
   });
 });

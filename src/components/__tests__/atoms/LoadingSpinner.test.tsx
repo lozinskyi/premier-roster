@@ -4,11 +4,15 @@ import { Text, View } from 'react-native';
 
 // Create mock components with proper TypeScript types
 const MockCenter = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-center" {...props}>{children}</View>
+  <View testID="mock-center" {...props}>
+    {children}
+  </View>
 );
 
 const MockVStack = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-vstack" {...props}>{children}</View>
+  <View testID="mock-vstack" {...props}>
+    {children}
+  </View>
 );
 
 const MockSpinner = ({ ...props }: { [key: string]: any }) => (
@@ -16,7 +20,9 @@ const MockSpinner = ({ ...props }: { [key: string]: any }) => (
 );
 
 const MockText = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <Text testID="mock-text" {...props}>{children}</Text>
+  <Text testID="mock-text" {...props}>
+    {children}
+  </Text>
 );
 
 // Mock modules
@@ -28,12 +34,13 @@ jest.mock('@gluestack-ui/themed', () => ({
 }));
 
 // Import the component after mocking dependencies
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { LoadingSpinner } = require('../../../components/atoms/LoadingSpinner');
 
 describe('LoadingSpinner', () => {
   it('renders with default message', () => {
     const { getByText, getByTestId } = render(<LoadingSpinner />);
-    
+
     expect(getByTestId('mock-center')).toBeTruthy();
     expect(getByTestId('mock-vstack')).toBeTruthy();
     expect(getByTestId('mock-spinner')).toBeTruthy();
@@ -42,7 +49,7 @@ describe('LoadingSpinner', () => {
 
   it('renders with custom message', () => {
     const { getByText, getByTestId } = render(<LoadingSpinner message="Please wait..." />);
-    
+
     expect(getByTestId('mock-center')).toBeTruthy();
     expect(getByTestId('mock-vstack')).toBeTruthy();
     expect(getByTestId('mock-spinner')).toBeTruthy();

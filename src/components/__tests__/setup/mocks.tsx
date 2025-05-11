@@ -30,7 +30,7 @@ export const setupGluestackUIMocks = () => {
         type: 'mockVStack',
         props: { 'data-testid': 'mock-vstack', ...props, children },
       })),
-      
+
       // Typography components
       Text: jest.fn(({ children, ...props }) => ({
         type: 'mockText',
@@ -40,7 +40,7 @@ export const setupGluestackUIMocks = () => {
         type: 'mockHeading',
         props: { 'data-testid': 'mock-heading', ...props, children },
       })),
-      
+
       // Form components
       Input: jest.fn(({ children, ...props }) => ({
         type: 'mockInput',
@@ -54,7 +54,7 @@ export const setupGluestackUIMocks = () => {
         type: 'mockInputSlot',
         props: { 'data-testid': 'mock-input-slot', onTouchEnd: onPress, ...props, children },
       })),
-      
+
       // Feedback components
       Badge: jest.fn(({ children, ...props }) => ({
         type: 'mockBadge',
@@ -64,11 +64,11 @@ export const setupGluestackUIMocks = () => {
         type: 'mockBadgeText',
         props: { 'data-testid': 'mock-badge-text', ...props, children },
       })),
-      Spinner: jest.fn((props) => ({
+      Spinner: jest.fn(props => ({
         type: 'mockSpinner',
         props: { 'data-testid': 'mock-spinner', ...props },
       })),
-      Divider: jest.fn((props) => ({
+      Divider: jest.fn(props => ({
         type: 'mockDivider',
         props: { 'data-testid': 'mock-divider', ...props },
       })),
@@ -82,25 +82,25 @@ export const setupExpoVectorIconsMocks = () => {
     // Mock for Ionicons
     Ionicons: jest.fn(({ name, size, color }) => ({
       type: 'mockIonicon',
-      props: { 
+      props: {
         'data-testid': `mock-icon-${name}`,
-        style: { 
-          width: typeof size === 'number' ? size : 24, 
-          height: typeof size === 'number' ? size : 24, 
-          backgroundColor: color 
+        style: {
+          width: typeof size === 'number' ? size : 24,
+          height: typeof size === 'number' ? size : 24,
+          backgroundColor: color,
         },
-        children: name
-      }
+        children: name,
+      },
     })),
-    
+
     // Mock for MaterialIcons
     MaterialIcons: jest.fn(({ name, size, color }) => ({
       type: 'mockMaterialIcon',
-      props: { 
-        'data-testid': `mock-icon-${name}`, 
+      props: {
+        'data-testid': `mock-icon-${name}`,
         style: { width: size, height: size, backgroundColor: color },
-        children: name
-      }
+        children: name,
+      },
     })),
   }));
 };
@@ -110,7 +110,7 @@ export const setupCustomComponentsMocks = () => {
   jest.mock('../../../components/atoms', () => ({
     CustomBadge: jest.fn(({ text, ...props }) => ({
       type: 'mockCustomBadge',
-      props: { 'data-testid': 'mock-custom-badge', ...props, children: text }
+      props: { 'data-testid': 'mock-custom-badge', ...props, children: text },
     })),
   }));
 };

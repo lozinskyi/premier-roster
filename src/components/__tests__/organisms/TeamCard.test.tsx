@@ -15,45 +15,47 @@ type Team = {
 
 // Create mock components with proper TypeScript types
 const MockBox = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-box" {...props}>{children}</View>
+  <View testID="mock-box" {...props}>
+    {children}
+  </View>
 );
 
 const MockHStack = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-hstack" {...props}>{children}</View>
+  <View testID="mock-hstack" {...props}>
+    {children}
+  </View>
 );
 
 const MockView = ({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) => (
-  <View testID="mock-view" {...props}>{children}</View>
+  <View testID="mock-view" {...props}>
+    {children}
+  </View>
 );
 
-const MockPressable = ({ 
-  children, 
-  onPress, 
-  ...props 
-}: { 
+const MockPressable = ({
+  children,
+  onPress,
+  ...props
+}: {
   children?: React.ReactNode;
   onPress?: () => void;
   [key: string]: any;
 }) => (
-  <TouchableOpacity 
-    testID="mock-pressable" 
-    onPress={onPress}
-    {...props}
-  >
+  <TouchableOpacity testID="mock-pressable" onPress={onPress} {...props}>
     {children}
   </TouchableOpacity>
 );
 
-const MockImage = ({ 
-  source, 
-  alt, 
-  ...props 
-}: { 
+const MockImage = ({
+  source,
+  alt,
+  ...props
+}: {
   source: { uri: string } | number;
   alt: string;
   [key: string]: any;
 }) => (
-  <RNImage 
+  <RNImage
     testID={`mock-image-${typeof source === 'object' && source.uri ? 'remote' : 'local'}`}
     source={source}
     accessibilityLabel={alt}
@@ -62,8 +64,8 @@ const MockImage = ({
 );
 
 // Mock TeamInfo component
-const MockTeamInfo = ({ 
-  name, 
+const MockTeamInfo = ({
+  name,
   founded,
   ...props
 }: {
@@ -91,6 +93,7 @@ jest.mock('../../../components/molecules', () => ({
 }));
 
 // Import the component after mocking dependencies
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { TeamCard } = require('../../../components/organisms/TeamCard');
 
 describe('TeamCard', () => {
@@ -114,12 +117,12 @@ describe('TeamCard', () => {
     const { getAllByTestId, getByTestId, getByText } = render(
       <TeamCard team={mockTeam} onPress={mockOnPress} />
     );
-    
+
     // Check if the card components are rendered
     expect(getAllByTestId('mock-box').length).toBeGreaterThan(0); // Check that at least one box exists
     expect(getByTestId('mock-pressable')).toBeTruthy();
     expect(getByTestId('mock-image-remote')).toBeTruthy();
-    
+
     // Check if team info is passed correctly to TeamInfo component
     expect(getByTestId('mock-team-info')).toBeTruthy();
     expect(getByText('Arsenal FC')).toBeTruthy();
@@ -127,13 +130,11 @@ describe('TeamCard', () => {
   });
 
   it('calls onPress handler when pressed', () => {
-    const { getByTestId } = render(
-      <TeamCard team={mockTeam} onPress={mockOnPress} />
-    );
-    
+    const { getByTestId } = render(<TeamCard team={mockTeam} onPress={mockOnPress} />);
+
     const pressable = getByTestId('mock-pressable');
     fireEvent.press(pressable);
-    
+
     expect(mockOnPress).toHaveBeenCalledTimes(1);
     expect(mockOnPress).toHaveBeenCalledWith(mockTeam);
   });
