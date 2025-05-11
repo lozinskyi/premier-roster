@@ -8,10 +8,7 @@ interface TeamInfoProps {
   founded?: number;
 }
 
-export const TeamInfo: React.FC<TeamInfoProps> = ({
-  name,
-  founded
-}) => {
+export const TeamInfo: React.FC<TeamInfoProps> = ({ name, founded }) => {
   return (
     <VStack flex={1} space="xs">
       <HStack justifyContent="space-between" alignItems="center">
@@ -20,13 +17,13 @@ export const TeamInfo: React.FC<TeamInfoProps> = ({
         </Heading>
         <MaterialIcons name="chevron-right" size={24} color="#FFC107" />
       </HStack>
-      
+
       <HStack space="sm" alignItems="center" flexWrap="wrap">
         {founded && (
-          <CustomBadge 
+          <CustomBadge
             text={`Founded: ${founded}`}
             bgColor="$amber500"
-            textColor="$backgroundDark900" 
+            textColor="$backgroundDark900"
             variant="solid"
             size="sm"
             borderRadius="$sm"

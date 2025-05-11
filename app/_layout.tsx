@@ -1,5 +1,5 @@
-import { config } from "@gluestack-ui/config";
-import { Box, GluestackUIProvider } from "@gluestack-ui/themed";
+import { config } from '@gluestack-ui/config';
+import { Box, GluestackUIProvider } from '@gluestack-ui/themed';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'react-native';
 
@@ -11,14 +11,14 @@ const darkConfig = {
     colors: {
       ...config.tokens.colors,
       // Enhanced dark theme colors
-      primary500: "$purple500",
-      primary600: "$purple600",
-      primary700: "$purple700",
-      secondary500: "$amber500",
-      secondary600: "$amber600",
-      secondary700: "$amber700",
-    }
-  }
+      primary500: '$purple500',
+      primary600: '$purple600',
+      primary700: '$purple700',
+      secondary500: '$amber500',
+      secondary600: '$amber600',
+      secondary700: '$amber700',
+    },
+  },
 };
 
 export default function RootLayout() {
@@ -37,7 +37,7 @@ export default function RootLayout() {
             },
             contentStyle: {
               backgroundColor: '$backgroundDark900',
-            }
+            },
           }}
         />
       </Box>

@@ -1,7 +1,10 @@
-import { PlayerResponse } from "../api/generated";
-import { StoredPlayer } from "../types";
+import { PlayerResponse } from '../api/generated';
+import { StoredPlayer } from '../types';
 
-const convertPlayerResponseToStoredPlayer = ({ player, statistics }: PlayerResponse): StoredPlayer => ({
+const convertPlayerResponseToStoredPlayer = ({
+  player,
+  statistics,
+}: PlayerResponse): StoredPlayer => ({
   id: player.id,
   firstname: player.firstname,
   lastname: player.lastname,

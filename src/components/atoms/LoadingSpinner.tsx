@@ -5,9 +5,7 @@ interface LoadingSpinnerProps {
   message?: string;
 }
 
-const LoadingSpinnerComponent: React.FC<LoadingSpinnerProps> = ({ 
-  message = 'Loading...' 
-}) => {
+const LoadingSpinnerComponent: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...' }) => {
   return (
     <Center flex={1}>
       <VStack space="md" alignItems="center">

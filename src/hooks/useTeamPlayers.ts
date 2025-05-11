@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-import { apiClient } from "../api/apiClient";
-import { asyncStorage } from "../storage";
-import { StoredPlayer } from "../types";
-import { convertPlayerResponseToStoredPlayer } from "../utils";
+import { useCallback, useEffect, useState } from 'react';
+import { apiClient } from '../api/apiClient';
+import { asyncStorage } from '../storage';
+import { StoredPlayer } from '../types';
+import { convertPlayerResponseToStoredPlayer } from '../utils';
 
 export const useTeamPlayers = (teamId: string, league: string, season: string) => {
   const [players, setPlayers] = useState<StoredPlayer[] | undefined>();
@@ -17,20 +17,27 @@ export const useTeamPlayers = (teamId: string, league: string, season: string) =
       const storedPlayers = await asyncStorage.getItem(storageKey);
       const storedTimestamp = await asyncStorage.getItem(timestampStorageKey);
       const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
-      const isDataStale = storedTimestamp && (Date.now() - parseInt(storedTimestamp, 10) > thirtyDaysInMs);
+      const isDataStale =
+        storedTimestamp && Date.now() - parseInt(storedTimestamp, 10) > thirtyDaysInMs;
 
       if (storedPlayers && !isDataStale) {
         setPlayers(JSON.parse(storedPlayers));
       } else {
-        console.log("Fetching players from API...");
+        console.log('Fetching players from API...');
         let allPlayers: StoredPlayer[] = [];
         let currentPage = 1;
         let totalPages = 1;
 
         // Fetch all pages of players
         do {
-          const fetchedPlayers = await apiClient.default.getPlayers(league, season, teamId, currentPage);
-          const playersData = fetchedPlayers.response?.map(convertPlayerResponseToStoredPlayer) || [];
+          const fetchedPlayers = await apiClient.default.getPlayers(
+            league,
+            season,
+            teamId,
+            currentPage
+          );
+          const playersData =
+            fetchedPlayers.response?.map(convertPlayerResponseToStoredPlayer) || [];
           allPlayers = [...allPlayers, ...playersData];
 
           // Update paging information
@@ -46,11 +53,11 @@ export const useTeamPlayers = (teamId: string, league: string, season: string) =
         setPlayers(allPlayers);
       }
     } catch (error) {
-      console.error("Error fetching players:", error);
+      console.error('Error fetching players:', error);
     } finally {
       setIsLoading(false);
     }
-  }, [teamId, season, storageKey]);
+  }, [teamId, season, storageKey, timestampStorageKey, league]);
 
   useEffect(() => {
     if (!players) {

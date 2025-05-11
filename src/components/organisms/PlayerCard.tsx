@@ -7,14 +7,12 @@ interface PlayerCardProps {
   player: StoredPlayer;
 }
 
-const PlayerCardComponent: React.FC<PlayerCardProps> = ({
-  player
-}) => {
+const PlayerCardComponent: React.FC<PlayerCardProps> = ({ player }) => {
   return (
-    <Box 
-      mb="$4" 
-      borderRadius="$lg" 
-      overflow="hidden" 
+    <Box
+      mb="$4"
+      borderRadius="$lg"
+      overflow="hidden"
       bg="$backgroundDark800"
       borderWidth={1}
       borderColor="$borderDark700"
@@ -24,27 +22,25 @@ const PlayerCardComponent: React.FC<PlayerCardProps> = ({
       shadowRadius={3}
       elevation={3}
     >
-      <View
-        bg="$backgroundDark800"
-      >
+      <View bg="$backgroundDark800">
         <HStack>
           <Box
             overflow="hidden"
             bg="$backgroundDark700"
             borderRightWidth={1}
             borderRightColor="$borderDark600"
-            justifyContent='center'
+            justifyContent="center"
           >
-            <Image 
-              source={{ uri: player.photo }} 
-              alt="Player Photo" 
+            <Image
+              source={{ uri: player.photo }}
+              alt="Player Photo"
               resizeMode="cover"
               height={150}
               aspectRatio={1}
             />
           </Box>
-          
-          <PlayerInfo 
+
+          <PlayerInfo
             firstname={player.firstname}
             lastname={player.lastname}
             position={player.position}

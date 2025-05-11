@@ -8,22 +8,16 @@ interface TeamCardProps {
   onPress: (team: Team) => void;
 }
 
-const TeamCardComponent: React.FC<TeamCardProps> = ({
-  team,
-  onPress
-}) => {
+const TeamCardComponent: React.FC<TeamCardProps> = ({ team, onPress }) => {
   const handlePress = useCallback(() => {
     onPress(team);
   }, [onPress, team]);
 
   return (
-    <Pressable 
-      onPress={handlePress}
-      mb="$3"
-    >
-      <Box 
-        bg="$backgroundDark800" 
-        borderRadius="$lg" 
+    <Pressable onPress={handlePress} mb="$3">
+      <Box
+        bg="$backgroundDark800"
+        borderRadius="$lg"
         overflow="hidden"
         borderWidth={1}
         borderColor="$borderDark700"
@@ -33,29 +27,19 @@ const TeamCardComponent: React.FC<TeamCardProps> = ({
         shadowRadius={3}
         elevation={5}
       >
-        <View
-          bg="$purple900"
-          p="$1"
-        >
+        <View bg="$purple900" p="$1">
           <HStack space="md" alignItems="center" p="$3">
-            <Box 
-              bg="$backgroundDark700" 
-              p="$2" 
+            <Box
+              bg="$backgroundDark700"
+              p="$2"
               borderRadius="$full"
               borderWidth={2}
               borderColor="$borderDark600"
             >
-              <Image 
-                source={{ uri: team.logo }} 
-                alt="Team Logo" 
-                size="md"
-              />
+              <Image source={{ uri: team.logo }} alt="Team Logo" size="md" />
             </Box>
-            
-            <TeamInfo 
-              name={team.name} 
-              founded={team.founded} 
-            />
+
+            <TeamInfo name={team.name} founded={team.founded} />
           </HStack>
         </View>
       </Box>

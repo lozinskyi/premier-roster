@@ -8,16 +8,16 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export const SearchBar: FC<SearchBarProps> = ({ 
-  value, 
-  onChangeText, 
-  placeholder = 'Search...'
+export const SearchBar: FC<SearchBarProps> = ({
+  value,
+  onChangeText,
+  placeholder = 'Search...',
 }) => {
   return (
     <Box width="100%">
-      <Input 
-        variant="outline" 
-        size="md" 
+      <Input
+        variant="outline"
+        size="md"
         borderColor="$borderDark700"
         backgroundColor="$backgroundDark800"
         borderRadius="$lg"
