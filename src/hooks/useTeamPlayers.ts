@@ -23,7 +23,6 @@ export const useTeamPlayers = (teamId: string, league: string, season: string) =
       if (storedPlayers && !isDataStale) {
         setPlayers(JSON.parse(storedPlayers));
       } else {
-        console.log('Fetching players from API...');
         let allPlayers: StoredPlayer[] = [];
         let currentPage = 1;
         let totalPages = 1;
