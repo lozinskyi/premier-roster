@@ -13,7 +13,15 @@
     "api:gen": "openapi --input ./codegen/api-football.yaml --output ./src/api/generated --client fetch --name FootballApiClient",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:verbose": "jest --verbose"
+    "test:verbose": "jest --verbose",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "expo lint --fix",
+      "jest --findRelatedTests"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
@@ -59,8 +67,10 @@
     "eslint-config-expo": "~9.2.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-expo": "^53.0.5",
+    "lint-staged": "^16.0.0",
     "openapi-typescript-codegen": "^0.29.0",
     "prettier": "^3.5.3",
     "react-test-renderer": "^19.0.0",
