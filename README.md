@@ -85,6 +85,16 @@ To check if your code meets the formatting standards without making changes:
 npm run format:check
 ```
 
+### Git Hooks
+
+The project uses Husky and lint-staged to enforce code quality through git hooks:
+
+- **Pre-commit Hook**: Before each commit, the following checks run automatically:
+  - Prettier formats staged files
+  - ESLint fixes linting issues
+
+This ensures that all code committed to the repository meets the project's code style and quality standards.
+
 ### Testing
 
 The project uses Jest and React Testing Library for unit and component testing:
