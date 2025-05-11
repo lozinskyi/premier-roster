@@ -1,6 +1,6 @@
 import { Team } from '@/src/api/generated';
 import { EmptyState, LoadingSpinner, SearchBar, SectionHeader, TeamCard } from '@/src/components';
-import { PREMIER_LEAGUE_ID, SEASON_2022_ID } from '@/src/constants';
+import { PREMIER_LEAGUE_ID, SEASON_2024_ID } from '@/src/constants';
 import { useTeams } from '@/src/hooks/useTeams';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Box, Divider, VStack } from '@gluestack-ui/themed';
@@ -13,13 +13,13 @@ const Teams: FC = () => {
 
   const { teams, isLoading, searchText, setSearchText } = useTeams(
     PREMIER_LEAGUE_ID,
-    SEASON_2022_ID
+    SEASON_2024_ID
   );
 
   const handleTeamPress = useCallback(
     (team: Team) => {
       router.push(
-        `/team?teamId=${team.id}&teamName=${team.name}&league=${PREMIER_LEAGUE_ID}&season=${SEASON_2022_ID}`
+        `/team?teamId=${team.id}&teamName=${team.name}&league=${PREMIER_LEAGUE_ID}&season=${SEASON_2024_ID}`
       );
     },
     [router]
