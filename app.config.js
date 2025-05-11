@@ -46,7 +46,7 @@ export default {
       FOOTBALL_API_KEY: process.env.FOOTBALL_API_KEY,
       FOOTBALL_API_BASE_URL: process.env.FOOTBALL_API_BASE_URL,
       eas: {
-        projectId: process.env.EAS_PROJECT_ID,
+        projectId: 'd79d807b-f429-4029-8086-ccdba040409b',
       },
     },
   },
