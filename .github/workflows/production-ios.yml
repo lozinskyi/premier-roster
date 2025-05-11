@@ -38,16 +38,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create .env file
+        run: |
+          echo "FOOTBALL_API_KEY=${{ secrets.FOOTBALL_API_KEY }}" > .env
+          echo "FOOTBALL_API_BASE_URL=${{ secrets.FOOTBALL_API_BASE_URL }}" >> .env
+          echo "EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}" >> .env
+          cat .env
+
       - name: Build and submit to TestFlight
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
           EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
-        run: eas build --auto-submit --profile production --platform ios --non-interactive --no-wait
+          EXPO_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+        run: eas build --auto-submit --profile production --platform ios --non-interactive --no-wait --id ${{ secrets.EAS_PROJECT_ID }}
         
       - name: Publish EAS Update
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
           EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+          EXPO_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         run: eas update --auto --platform ios

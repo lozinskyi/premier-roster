@@ -91,12 +91,20 @@ jobs:
             echo "Android service account key not provided - skipping"
           fi
 
+      - name: Create .env file
+        run: |
+          echo "FOOTBALL_API_KEY=${{ secrets.FOOTBALL_API_KEY }}" > .env
+          echo "FOOTBALL_API_BASE_URL=${{ secrets.FOOTBALL_API_BASE_URL }}" >> .env
+          echo "EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}" >> .env
+          cat .env
+
       - name: Build Android (EAS)
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
           EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
-        run: eas build --platform android --non-interactive --no-wait --profile production
+          EXPO_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+        run: eas build --platform android --non-interactive --no-wait --profile production --id ${{ secrets.EAS_PROJECT_ID }}
 
       - name: Build iOS (EAS)
         env:
@@ -106,7 +114,8 @@ jobs:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
           EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
-        run: eas build --platform ios --non-interactive --no-wait --profile production
+          EXPO_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+        run: eas build --platform ios --non-interactive --no-wait --profile production --id ${{ secrets.EAS_PROJECT_ID }}
 
       - name: Submit to App Store
         if: startsWith(github.ref, 'refs/heads/main')
