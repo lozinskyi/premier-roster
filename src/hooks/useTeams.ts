@@ -25,7 +25,6 @@ export const useTeams = (league: string, season: string) => {
       if (storedTeams) {
         setTeams(JSON.parse(storedTeams));
       } else {
-        console.log('Fetching teams from API...');
         // Fetch teams from API if not in asyncStorage
         const fetchedTeams = await apiClient.default.getTeams(league, season);
         const teamsData = fetchedTeams.response?.map(item => item.team);
