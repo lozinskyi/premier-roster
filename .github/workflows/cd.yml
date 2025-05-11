@@ -1,0 +1,137 @@
+name: Build and Release (CD)
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: App version
+        default: '1.0.0'
+        required: true
+      code_version:
+        description: App version code
+        type: string
+        default: '1'
+        required: true
+
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate workflows
+        run: |
+          if [ ! -f "eas.json" ]; then
+            echo "::error::eas.json file missing! EAS builds will fail."
+            exit 1
+          fi
+          echo "EAS configuration found - proceeding with build"
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli@latest
+
+      - name: Setup EAS
+        run: |
+          eas login --non-interactive -u ${{ secrets.EXPO_USERNAME }} -p ${{ secrets.EXPO_PASSWORD }}
+
+      - name: Update app version
+        run: |
+          if [ -f "./app.config.js" ]; then
+            echo "Updating version in app.config.js"
+            # Create a backup just in case
+            cp ./app.config.js ./app.config.js.bak
+            
+            # Update the version
+            node -e "
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Read the app config
+            const appConfigPath = path.resolve('./app.config.js');
+            const appConfigContent = fs.readFileSync(appConfigPath, 'utf8');
+            
+            // Handle the module.exports format
+            let updatedContent;
+            if (appConfigContent.includes('module.exports =') || appConfigContent.includes('export default')) {
+              updatedContent = appConfigContent
+                .replace(/('|\")version('|\"):\\s*('|\")[^'\"]*('|\")/g, '\"version\": \"${{ inputs.release_version }}\"')
+                .replace(/versionCode:\\s*\\d+/g, 'versionCode: ${{ inputs.code_version }}')
+                .replace(/buildNumber:\\s*('|\")[^'\"]*('|\")/g, 'buildNumber: \"${{ inputs.code_version }}\"');
+            } else {
+              console.log('Could not identify app config format, using simple replacement');
+              updatedContent = appConfigContent;
+            }
+            
+            fs.writeFileSync(appConfigPath, updatedContent);
+            console.log('App version updated successfully');
+            "
+            echo "Version in app.config.js updated to ${{ inputs.release_version }} (build ${{ inputs.code_version }})"
+          else
+            echo "app.config.js not found - skipping version update"
+          fi
+
+      - name: Create service account key file for Android
+        if: startsWith(github.ref, 'refs/heads/main')
+        run: |
+          if [ "${{ secrets.ANDROID_SERVICE_ACCOUNT_KEY }}" != "" ]; then
+            echo "${{ secrets.ANDROID_SERVICE_ACCOUNT_KEY }}" > pc-api-key.json
+            echo "Android service account key created"
+          else
+            echo "Android service account key not provided - skipping"
+          fi
+
+      - name: Build Android (EAS)
+        run: eas build --platform android --non-interactive --no-wait --profile production
+
+      - name: Build iOS (EAS)
+        env:
+          EXPO_APPLE_ID: ${{ secrets.EXPO_APPLE_ID }}
+          EXPO_APP_ID: ${{ secrets.EXPO_APP_ID }}
+          EXPO_TEAM_ID: ${{ secrets.EXPO_TEAM_ID }}
+        run: eas build --platform ios --non-interactive --no-wait --profile production
+
+      - name: Submit to App Store
+        if: startsWith(github.ref, 'refs/heads/main')
+        env:
+          EXPO_APPLE_ID: ${{ secrets.EXPO_APPLE_ID }}
+          EXPO_APP_ID: ${{ secrets.EXPO_APP_ID }}
+          EXPO_TEAM_ID: ${{ secrets.EXPO_TEAM_ID }}
+        run: |
+          if [ "${{ secrets.EXPO_APPLE_ID }}" != "" ] && [ "${{ secrets.EXPO_APP_ID }}" != "" ] && [ "${{ secrets.EXPO_TEAM_ID }}" != "" ]; then
+            eas submit --platform ios --non-interactive --latest
+          else
+            echo "Apple credentials not provided - skipping iOS submission"
+          fi
+
+  tag-release:
+    needs: [build]
+    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/release')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+          
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          body: |
+            Premier Roster App
+            version-name: ${{ inputs.release_version }}
+            version-code: ${{ inputs.code_version }}
+          tag: 'v${{ inputs.release_version }}'
+          makeLatest: true
+          prerelease: false
+          name: 'Premier Roster v${{ inputs.release_version }}'

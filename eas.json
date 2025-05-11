@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 7.0.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "${process.env.EXPO_APPLE_ID}",
+        "ascAppId": "${process.env.EXPO_APP_ID}",
+        "appleTeamId": "${process.env.EXPO_TEAM_ID}"
+      },
+      "android": {
+        "serviceAccountKeyPath": "pc-api-key.json",
+        "track": "production"
+      }
+    }
+  }
+}
