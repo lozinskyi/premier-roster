@@ -60,7 +60,7 @@ jobs:
           FOOTBALL_API_BASE_URL: ${{ secrets.FOOTBALL_API_BASE_URL }}
           EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
           EXPO_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
-        run: eas build --auto-submit --profile production --platform android --non-interactive --no-wait --id ${{ secrets.EAS_PROJECT_ID }}
+        run: eas build --auto-submit --profile production --platform android --non-interactive --no-wait
         
       - name: Publish EAS Update
         env:
