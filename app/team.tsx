@@ -4,7 +4,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Badge, BadgeText, Box, Divider, HStack, VStack } from '@gluestack-ui/themed';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useMemo } from 'react';
-import { FlatList, StatusBar } from 'react-native';
+import { FlatList, StatusBar, StyleSheet } from 'react-native';
 import { StoredPlayer } from '../src/types';
 
 const Team: React.FC = () => {
@@ -35,7 +35,7 @@ const Team: React.FC = () => {
               name="football-outline"
               size={14}
               color="#9333ea"
-              style={{ marginRight: 4 }}
+              style={styles.iconMarginRight}
             />
             <BadgeText>Season: {season}</BadgeText>
           </Badge>
@@ -63,9 +63,7 @@ const Team: React.FC = () => {
       <Stack.Screen
         options={{
           title: teamName,
-          headerStyle: {
-            backgroundColor: '#121212',
-          },
+          headerStyle: styles.headerStyle,
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -80,7 +78,7 @@ const Team: React.FC = () => {
           data={players}
           renderItem={renderPlayer}
           keyExtractor={keyExtractor}
-          contentContainerStyle={{ padding: 16 }}
+          contentContainerStyle={styles.listContent}
           ListHeaderComponent={ListHeader}
           ListEmptyComponent={EmptyListComponent}
           showsVerticalScrollIndicator={false}
@@ -93,5 +91,17 @@ const Team: React.FC = () => {
     </Box>
   );
 };
+
+const styles = StyleSheet.create({
+  iconMarginRight: {
+    marginRight: 4,
+  },
+  listContent: {
+    padding: 16,
+  },
+  headerStyle: {
+    backgroundColor: '#121212',
+  },
+});
 
 export default Team;

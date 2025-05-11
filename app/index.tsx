@@ -59,9 +59,7 @@ const Teams: FC = () => {
       <Stack.Screen
         options={{
           title: 'Premier League Teams',
-          headerStyle: {
-            backgroundColor: '#121212',
-          },
+          headerStyle: styles.headerStyle,
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -95,6 +93,9 @@ const styles = StyleSheet.create({
   },
   listContentContainer: {
     padding: 16,
+  },
+  headerStyle: {
+    backgroundColor: '#121212',
   },
 });
 
